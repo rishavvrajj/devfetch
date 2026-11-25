@@ -1,20 +1,30 @@
 {
   "name": "devfetch",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Fast, beautiful CLI overview of your developer environment, project, Git state, and local security hygiene.",
   "type": "module",
   "license": "MIT",
   "author": "Rishav Raj <rishav5raj3@gmail.com>",
-  "module": "index.ts",
+  "homepage": "https://github.com/rishavvrajj/devfetch#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishavvrajj/devfetch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rishavvrajj/devfetch/issues",
+    "email": "rishav5raj3@gmail.com"
+  },
   "private": false,
   "keywords": [
     "cli",
+    "cli-tool",
     "developer-tools",
     "terminal",
     "system-info",
     "git",
     "security",
-    "developer-experience"
+    "developer-experience",
+    "bun"
   ],
   "bin": {
     "devfetch": "./dist/cli.js"
@@ -24,20 +34,27 @@
     "README.md",
     "LICENSE"
   ],
+  "sideEffects": false,
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "bun": ">=1.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "dev": "bun run src/cli.ts",
-    "build": "bun build src/cli.ts --outdir dist --target node --external commander --external picocolors",
+    "typecheck": "bun x tsc --noEmit",
+    "build": "bun build ./src/cli.ts --outdir ./dist --target node --external commander --external picocolors",
+    "compile": "bun build ./src/cli.ts --compile --outfile devfetch",
     "test": "bun test",
+    "check": "bun run typecheck && bun run test && bun run build",
     "prepublishOnly": "bun run build && bun run test"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/node": "^26.6.7"
-  },
-  "peerDependencies": {
+    "@types/node": "^26.6.7",
     "typescript": "^7.0.2"
   },
   "dependencies": {
