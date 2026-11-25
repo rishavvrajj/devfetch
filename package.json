@@ -1,0 +1,47 @@
+{
+  "name": "devfetch",
+  "version": "0.0.1",
+  "description": "Fast, beautiful CLI overview of your developer environment, project, Git state, and local security hygiene.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Rishav Raj <rishav5raj3@gmail.com>",
+  "module": "index.ts",
+  "private": false,
+  "keywords": [
+    "cli",
+    "developer-tools",
+    "terminal",
+    "system-info",
+    "git",
+    "security",
+    "developer-experience"
+  ],
+  "bin": {
+    "devfetch": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "bun run src/cli.ts",
+    "build": "bun build src/cli.ts --outdir dist --target node --external commander --external picocolors",
+    "test": "bun test",
+    "prepublishOnly": "bun run build && bun run test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^26.6.7"
+  },
+  "peerDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "commander": "^15.1.0",
+    "picocolors": "^1.1.1"
+  }
+}
