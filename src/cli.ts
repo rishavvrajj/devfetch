@@ -4,6 +4,7 @@ import { collectData } from "./index.js";
 import { renderTerminal } from "./render/terminal.js";
 import { renderJson } from "./render/json.js";
 import { renderMinimal } from "./render/minimal.js";
+import { renderDashboard } from "./render/dashboard.js";
 
 type CliOptions = {
   json?: boolean;
@@ -12,6 +13,7 @@ type CliOptions = {
   theme?: string;
   project?: boolean;
   security?: boolean;
+  dashboard?: boolean;
 };
 
 const program = new Command();
@@ -26,6 +28,7 @@ program
   .option("--theme <theme>", "Select a color theme", "default")
   .option("--project", "Show only project information")
   .option("--security", "Show only security information")
+  .option("--dashboard", "Show an interactive dashboard UI")
   .parse(process.argv);
 
 const options = program.opts<CliOptions>();
@@ -61,18 +64,25 @@ if (options.security) {
   process.exit(0);
 }
 
-const validThemes = ["default", "dracula", "nord"];
+const validThemes = ["default", "dracula", "nord"] as const;
 const theme = options.theme ?? "default";
 
-if (!validThemes.includes(theme)) {
+if (!validThemes.includes(theme as (typeof validThemes)[number])) {
   console.error(`Invalid theme "${theme}".`);
   console.error(`Available themes: ${validThemes.join(", ")}`);
   process.exit(1);
 }
 
+const selectedTheme = theme as (typeof validThemes)[number];
+
+if (options.dashboard) {
+  await renderDashboard(data, { theme: selectedTheme });
+  process.exit(0);
+}
+
 console.log(
   renderTerminal(data, {
     ascii: options.ascii !== false,
-    theme,
+    theme: selectedTheme,
   })
 );

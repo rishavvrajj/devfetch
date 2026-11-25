@@ -1,6 +1,6 @@
 {
   "name": "devfetch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fast, beautiful CLI overview of your developer environment, project, Git state, and local security hygiene.",
   "type": "module",
   "license": "MIT",
@@ -46,7 +46,7 @@
   "scripts": {
     "dev": "bun run src/cli.ts",
     "typecheck": "bun x tsc --noEmit",
-    "build": "bun build ./src/cli.ts --outdir ./dist --target node --external commander --external picocolors",
+    "build": "bun build ./src/cli.ts --outdir ./dist --target node --external commander --external picocolors --external ink --external react --external react/jsx-runtime --external react/jsx-dev-runtime",
     "compile": "bun build ./src/cli.ts --compile --outfile devfetch",
     "test": "bun test",
     "check": "bun run typecheck && bun run test && bun run build",
@@ -59,6 +59,8 @@
   },
   "dependencies": {
     "commander": "^15.1.0",
-    "picocolors": "^1.1.1"
+    "ink": "^5.2.1",
+    "picocolors": "^1.1.1",
+    "react": "^18.3.1"
   }
 }
